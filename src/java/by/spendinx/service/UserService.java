@@ -14,4 +14,7 @@ public interface UserService extends Service {
     boolean updateName(User user, String name);
     boolean updateSurname(User user, String surname);
     boolean updateDateOfBirth(User user, String dateOfBirth);
+    boolean checkCreate(User user) throws ServiceException;
+    boolean checkDelete(Integer id) throws ServiceException;
+    boolean checkUpdate(User user) throws ServiceException;
 }

@@ -71,4 +71,30 @@ public class UserServiceImpl extends ServiceImpl implements UserService {
     public boolean updateDateOfBirth(User user, String dateOfBirth) {
         return new UserDaoImpl(connection).updateDateOfBirth(user, dateOfBirth);
     }
+
+    public boolean checkCreate(User user) throws ServiceException {
+        try {
+            return new UserDaoImpl(connection).create(user);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean checkDelete(Integer id) throws ServiceException {
+        try {
+            return new UserDaoImpl(connection).delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean checkUpdate(User user) throws ServiceException {
+        try {
+            return new UserDaoImpl(connection).update(user);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

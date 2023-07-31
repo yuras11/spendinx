@@ -57,7 +57,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
     @Override
     public Currency findCurrencyByName(String name) {
-        return executeQueries(SQL_SELECT_CURRENCY_BY_NAME, name).get(0);
+        return executeQueries(SQL_SELECT_CURRENCY_BY_NAME, "" + name + "").get(0);
     }
 
     @Override

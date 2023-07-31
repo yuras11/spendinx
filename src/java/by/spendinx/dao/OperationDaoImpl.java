@@ -9,8 +9,8 @@ import java.util.List;
 public class OperationDaoImpl implements OperationDao {
     private static final String SQL_SELECT_ALL_OPERATIONS =
             "SELECT OperationId, [User], Income, Expenditure, Volume, Currency, DateOfOperation FROM OPERATION";
-    private static final String SQL_SELECT_OPERATION_BY_USER_ID =
-            "SELECT OperationId, [User], Income, Expenditure, Volume, Currency, DateOfOperation FROM OPERATION WHERE User=?";
+    private static final String SQL_SELECT_OPERATIONS_BY_USER_ID =
+            "SELECT OperationId, [User], Income, Expenditure, Volume, Currency, DateOfOperation FROM OPERATION WHERE [User]=?";
     private static final String SQL_SELECT_OPERATION_BY_ID =
             "SELECT OperationId, [User], Income, Expenditure, Volume, Currency, DateOfOperation FROM OPERATION WHERE OperationId=?";
     private static final String SQL_DELETE_OPERATION_BY_ID =
@@ -147,19 +147,26 @@ public class OperationDaoImpl implements OperationDao {
     @Override
     public boolean create(Operation operation) throws DaoException {
         Statement statement = null;
-        String id = findAll().size() + 1 + "";
-        String user = operation.getUser().getId() + "";
-        String income = operation.getIncome().getId() + "";
-        String expenditure = operation.getExpenditure().getId() + "";
-        String volume = operation.getVolume() + "";
-        String currency = operation.getCurrency().getId() + "";
+        int id = findAll().size() + 1;
+        int user = operation.getUser().getId();
+        int income;
+        int expenditure;
+        if (operation.getIncome() == null) {
+            income = 0;
+            expenditure = operation.getExpenditure().getId();
+        } else {
+            income = operation.getIncome().getId();
+            expenditure = 0;
+        }
+        double volume = operation.getVolume();
+        int currency = operation.getCurrency().getId();
         String dateOfOperation = operation.getDateOfOperation();
         try
         {
             statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO OPERATION(OperationId, User, Income, Expenditure, Volume, Currency, DateOfOperation) VALUES " +
-                    "(" + id + ", "+ "\'" + user + "\'" + ", "+ "\'" + income + "\'" + ", " + "\'" + expenditure + "\'" + ", " +
-                    "\'" + volume + "\'" + ", " + "\'" + currency + "\'" + ", " + "\'" + dateOfOperation + "\'" + ")");
+            statement.executeUpdate("INSERT INTO OPERATION(OperationId, [User], Income, Expenditure, Volume, Currency, DateOfOperation) VALUES " +
+                    "(" + id + ", " + user + ", "+ income + ", " + expenditure + ", " +
+                    volume + ", " + currency + ", " + "\'" + dateOfOperation + "\'" + ")");
         }
         catch (SQLException e)
         {
@@ -172,5 +179,10 @@ public class OperationDaoImpl implements OperationDao {
     @Override
     public boolean update(Operation operation) throws DaoException {
         return true;
+    }
+
+    @Override
+    public List<Operation> findOperationsByUserId(Integer id) throws DaoException {
+        return executeQueries(SQL_SELECT_OPERATIONS_BY_USER_ID, id.toString());
     }
 }

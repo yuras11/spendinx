@@ -126,8 +126,10 @@ public class UserDaoImpl implements UserDao {
         try
         {
             statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO USERS(UserId, Login, Password, Surname, Name, DateOfBirth) VALUES " +
-                    "(" + id + ", "+ "\'" + login + "\'" + ", "+ "\'" + password+ "\'" + ", "+ "\'" + userSurname+ "\'" + ", "+ "\'" + userName+ "\'" + ", "+ "\'" + dateOfBirth+ "\'" + ")");
+            statement.executeUpdate("INSERT INTO [USER] VALUES " +
+                    "(" + id + ", " + "\'" + login + "\'" + ", " +
+                    "\'" +password + "\'" + ", " + "\'" + userSurname + "\'" + ", " +
+                    "\'" + userName + "\'" + ", " + "\'" + dateOfBirth + "\'" + ")" );
         }
         catch (SQLException e)
         {
@@ -161,7 +163,7 @@ public class UserDaoImpl implements UserDao {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            statement.executeUpdate("UPDATE USER SET Login = " + "\'" + login + "\'" + " WHERE UserId = " + user.getId());
+            statement.executeUpdate("UPDATE [USER] SET Login = " + "\'" + login + "\'" + " WHERE UserId = " + user.getId());
             user.setLogin(login);
         } catch (SQLException e) {
             //LOGGER.log(Level.WARNING, "An error occurred in updateLogin()!");
@@ -176,7 +178,7 @@ public class UserDaoImpl implements UserDao {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            statement.executeUpdate("UPDATE USER SET Password = " + "\'" + password + "\'" + " WHERE UserId = " + user.getId());
+            statement.executeUpdate("UPDATE [USER] SET Password = " + "\'" + password + "\'" + " WHERE UserId = " + user.getId());
             user.setPassword(password);
         } catch (SQLException e) {
             //LOGGER.log(Level.WARNING, "An error occurred in updatePassword()!");
@@ -191,7 +193,7 @@ public class UserDaoImpl implements UserDao {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            statement.executeUpdate("UPDATE USER SET Name = " + "\'" + name + "\'" + " WHERE UserId = " + user.getId());
+            statement.executeUpdate("UPDATE [USER] SET Name = " + "\'" + name + "\'" + " WHERE UserId = " + user.getId());
             user.setName(name);
         } catch (SQLException e) {
             //LOGGER.log(Level.WARNING, "An error occurred in updateLogin()!");
@@ -206,7 +208,7 @@ public class UserDaoImpl implements UserDao {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            statement.executeUpdate("UPDATE USER SET Surname = " + "\'" + surname + "\'" + " WHERE UserId = " + user.getId());
+            statement.executeUpdate("UPDATE [USER] SET Surname = " + "\'" + surname + "\'" + " WHERE UserId = " + user.getId());
             user.setSurname(surname);
         } catch (SQLException e) {
             //LOGGER.log(Level.WARNING, "An error occurred in updateLogin()!");
@@ -221,7 +223,7 @@ public class UserDaoImpl implements UserDao {
         Statement statement = null;
         try {
             statement = connection.createStatement();
-            statement.executeUpdate("UPDATE USER SET DateOfBirth = " + "\'" + dateOfBirth + "\'" + " WHERE UserId = " + user.getId());
+            statement.executeUpdate("UPDATE [USER] SET DateOfBirth = " + "\'" + dateOfBirth + "\'" + " WHERE UserId = " + user.getId());
             user.setDateOfBirth(dateOfBirth);
         } catch (SQLException e) {
             //LOGGER.log(Level.WARNING, "An error occurred in updateLogin()!");

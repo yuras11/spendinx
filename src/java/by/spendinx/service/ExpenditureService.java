@@ -4,4 +4,5 @@ import by.spendinx.entity.Expenditure;
 
 public interface ExpenditureService {
     Expenditure findEntityById(Integer id) throws ServiceException;
+    Expenditure findExpenditureByExpenditureItem(Integer id) throws ServiceException;
 }

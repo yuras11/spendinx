@@ -1,0 +1,32 @@
+.form{
+    color: black;
+    text-decoration-color: black;
+    position: absolute;
+    top: 200px;
+}
+
+.form-enter-text {
+    font-size: 60px;
+    color: black;
+    position: absolute;
+    top: 50px;
+    left: 690px;
+}
+
+.input-button{
+    position: absolute;
+    left: 100px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.not-registered{
+    font-size: 18px;
+    color: black;
+    position: absolute;
+    top: 360px;
+    left: 590px;
+}

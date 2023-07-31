@@ -126,4 +126,9 @@ public class ExpenditureItemDaoImpl implements ExpenditureItemDao {
     public boolean update(ExpenditureItem expenditureItem) throws DaoException {
         return true;
     }
+
+    @Override
+    public ExpenditureItem findExpenditureItemByName(String name) throws DaoException {
+        return executeQueries(SQL_SELECT_EXPENDITURE_ITEM_BY_NAME, name).get(0);
+    }
 }

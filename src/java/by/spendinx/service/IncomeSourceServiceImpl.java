@@ -20,4 +20,14 @@ public class IncomeSourceServiceImpl extends ServiceImpl implements IncomeSource
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public IncomeSource findIncomeSourceByName(String name) throws ServiceException {
+        try {
+            return new IncomeSourceDaoImpl(connection).findIncomeSourceByName(name);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

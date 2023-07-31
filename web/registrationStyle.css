@@ -1,0 +1,15 @@
+.cover-heading-name {
+    font-size: 60px;
+    color: black;
+    position: absolute;
+    top: 50px;
+    left: 400px;
+}
+
+.form{
+    color: black;
+    text-decoration-color: black;
+    position: absolute;
+    top: 200px;
+    left: 400px;
+}

@@ -20,4 +20,14 @@ public class ExpenditureItemServiceImpl extends ServiceImpl implements Expenditu
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public ExpenditureItem findExpenditureItemByName(String name) throws ServiceException {
+        try {
+            return new ExpenditureItemDaoImpl(connection).findExpenditureItemByName(name);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

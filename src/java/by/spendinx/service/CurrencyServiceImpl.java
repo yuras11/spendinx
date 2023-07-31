@@ -8,7 +8,7 @@ import java.sql.Connection;
 
 public class CurrencyServiceImpl extends ServiceImpl implements CurrencyService {
     private final Connection connection;
-    protected CurrencyServiceImpl() throws DaoException {
+    public CurrencyServiceImpl() throws DaoException {
         this.connection = connectionPool.getConnection();
     }
 

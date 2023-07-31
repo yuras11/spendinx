@@ -16,6 +16,8 @@ public class ExpenditureDaoImpl implements ExpenditureDao {
             "SELECT ExpenditureId, Name, ExpenditureItem FROM EXPENDITURE WHERE ExpenditureId=?";
     private static final String SQL_DELETE_EXPENDITURE_BY_ID =
             "DELETE FROM EXPENDITURE WHERE ExpenditureId=?";
+    private static final String SQL_SELECT_EXPENDITURE_BY_EXPENDITURE_ITEM =
+            "SELECT ExpenditureId, Name, ExpenditureItem FROM EXPENDITURE WHERE ExpenditureItem=?";
     private Connection connection;
 
     public ExpenditureDaoImpl(Connection connection) {
@@ -133,5 +135,10 @@ public class ExpenditureDaoImpl implements ExpenditureDao {
     @Override
     public boolean update(Expenditure expenditure) throws DaoException {
         return true;
+    }
+
+    @Override
+    public Expenditure findExpenditureByExpenditureItem(Integer id) throws DaoException {
+        return executeQueries(SQL_SELECT_EXPENDITURE_BY_EXPENDITURE_ITEM, id.toString()).get(0);
     }
 }

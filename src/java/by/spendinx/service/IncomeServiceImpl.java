@@ -20,4 +20,14 @@ public class IncomeServiceImpl extends ServiceImpl implements IncomeService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public Income findIncomeByIncomeSource(Integer id) throws ServiceException {
+        try {
+            return new IncomeDaoImpl(connection).findIncomeByIncomeSource(id);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

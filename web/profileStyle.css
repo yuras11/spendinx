@@ -1,0 +1,40 @@
+.delete-btn, .delete-btn:hover{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.add-operation-btn, .add-operation-btn:hover{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    background-color: darkgreen;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.operations-table{
+    border-collapse: collapse;
+    border: black;
+    position: absolute;
+}
+.operations-table td , th{
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 15px;
+    color: black;
+}

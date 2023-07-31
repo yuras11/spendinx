@@ -1,6 +1,7 @@
 package by.spendinx.dao;
 
 import by.spendinx.entity.ExpenditureItem;
+import by.spendinx.entity.Income;
 import by.spendinx.entity.IncomeSource;
 
 import java.sql.*;
@@ -47,7 +48,7 @@ public class IncomeSourceDaoImpl implements IncomeSourceDao {
         }
         finally
         {
-            close(statement);
+            //close(statement);
         }
         return incomeSources;
     }
@@ -126,5 +127,10 @@ public class IncomeSourceDaoImpl implements IncomeSourceDao {
     @Override
     public boolean update(IncomeSource incomeSource) throws DaoException {
         return true;
+    }
+
+    @Override
+    public IncomeSource findIncomeSourceByName(String name) throws DaoException {
+        return executeQueries(SQL_SELECT_INCOME_SOURCE_BY_NAME, "" + name + "").get(0);
     }
 }

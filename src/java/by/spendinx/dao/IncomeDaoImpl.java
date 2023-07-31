@@ -9,12 +9,13 @@ import java.util.List;
 public class IncomeDaoImpl implements IncomeDao {
     private static final String SQL_SELECT_ALL_INCOMES =
             "SELECT IncomeId, Name, IncomeSource FROM INCOME";
-    private static final String SQL_SELECT_INCOME_BY_NAME =
-            "SELECT IncomeId, Name, IncomeSource FROM INCOME WHERE Name=?";
+    private static final String SQL_SELECT_INCOME_BY_INCOME_SOURCE =
+            "SELECT IncomeId, Name, IncomeSource FROM INCOME WHERE IncomeSource=?";
     private static final String SQL_SELECT_INCOME_BY_ID =
             "SELECT IncomeId, Name, IncomeSource FROM INCOME WHERE IncomeId=?";
     private static final String SQL_DELETE_INCOME_BY_ID =
             "DELETE FROM INCOME WHERE IncomeId=?";
+
     private Connection connection;
 
     public IncomeDaoImpl(Connection connection) {
@@ -132,5 +133,10 @@ public class IncomeDaoImpl implements IncomeDao {
     @Override
     public boolean update(Income income) throws DaoException {
         return true;
+    }
+
+    @Override
+    public Income findIncomeByIncomeSource(Integer id) throws DaoException {
+        return executeQueries(SQL_SELECT_INCOME_BY_INCOME_SOURCE, id.toString()).get(0);
     }
 }
