@@ -29,6 +29,7 @@
     border-collapse: collapse;
     border: black;
     position: absolute;
+    left: 100px;
 }
 .operations-table td , th{
     border: 1px solid black;

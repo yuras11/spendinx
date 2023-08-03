@@ -1,10 +1,12 @@
 package by.spendinx.dao;
 
 import by.spendinx.entity.*;
+import org.testng.internal.collections.Pair;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OperationDaoImpl implements OperationDao {
     private static final String SQL_SELECT_ALL_OPERATIONS =
@@ -15,6 +17,18 @@ public class OperationDaoImpl implements OperationDao {
             "SELECT OperationId, [User], Income, Expenditure, Volume, Currency, DateOfOperation FROM OPERATION WHERE OperationId=?";
     private static final String SQL_DELETE_OPERATION_BY_ID =
             "DELETE FROM OPERATION WHERE OperationId=?";
+    private static final String SQL_SELECT_EXPENDITURES_IN_LAST_MONTH_BY_USER_ID =
+            "SELECT * FROM OPERATION WHERE Income = 0 AND DateOfOperation >= DATEADD(MONTH, -1, GETDATE()) AND [User]=?";
+    private static final String SQL_SELECT_INCOMES_IN_LAST_MONTH_BY_USER_ID =
+            "SELECT * FROM OPERATION WHERE Expenditure = 0 AND DateOfOperation >= DATEADD(MONTH, -1, GETDATE()) AND [User]=?";
+    private static final String SQL_SELECT_EXPENDITURES_TODAY_BY_USER_ID =
+            "SELECT * FROM OPERATION WHERE Income = 0 AND CAST(DateOfOperation AS DATE) = CAST(GETDATE() AS DATE) AND [User]=?";
+    private static final String SQL_SELECT_INCOMES_TODAY_BY_USER_ID =
+            "SELECT * FROM OPERATION WHERE Expenditure = 0 AND CAST(DateOfOperation AS DATE) = CAST(GETDATE() AS DATE) AND [User]=?";
+    private static final String SQL_SELECT_INCOMES_BY_USER_ID =
+            "SELECT * FROM OPERATION WHERE Expenditure = 0 AND [User]=?";
+    private static final String SQL_SELECT_EXPENDITURES_BY_USER_ID =
+            "SELECT * FROM OPERATION WHERE Income = 0 AND [User]=?";
     private Connection connection;
 
     public OperationDaoImpl(Connection connection) {
@@ -185,4 +199,56 @@ public class OperationDaoImpl implements OperationDao {
     public List<Operation> findOperationsByUserId(Integer id) throws DaoException {
         return executeQueries(SQL_SELECT_OPERATIONS_BY_USER_ID, id.toString());
     }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfExpendituresInLastMonthByUserId(Integer id) throws DaoException {
+        return findSums(SQL_SELECT_EXPENDITURES_IN_LAST_MONTH_BY_USER_ID, id);
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfIncomesInLastMonthByUserId(Integer id) throws DaoException {
+        return findSums(SQL_SELECT_INCOMES_IN_LAST_MONTH_BY_USER_ID, id);
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfExpendituresByUserId(Integer id) throws DaoException {
+        return findSums(SQL_SELECT_EXPENDITURES_BY_USER_ID, id);
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfIncomesByUserId(Integer id) throws DaoException {
+        return findSums(SQL_SELECT_INCOMES_BY_USER_ID, id);
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfExpendituresTodayByUserId(Integer id) throws DaoException {
+        return findSums(SQL_SELECT_EXPENDITURES_TODAY_BY_USER_ID, id);
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfIncomesTodayByUserId(Integer id) throws DaoException {
+        return findSums(SQL_SELECT_INCOMES_TODAY_BY_USER_ID, id);
+    }
+
+    private List<Pair<Float, String>> findSums(String query, Integer id) throws DaoException {
+        CurrencyDao currencyDao = new CurrencyDaoImpl(connection);
+        List<Currency> currencies = currencyDao.findAll();
+        List<Pair<Float, String>> pairs = new ArrayList<>();
+        List<Operation> operations = executeQueries(query, id.toString());
+        for (Currency currency: currencies) {
+            float sum = 0;
+            String curr = "";
+            for (Operation operation: operations) {
+                if (Objects.equals(operation.getCurrency().getName(), currency.getName())) {
+                    sum += operation.getVolume();
+                    curr = operation.getCurrency().getName();
+                }
+            }
+            if (sum != 0) {
+                pairs.add(new Pair<>(sum, curr));
+            }
+        }
+        return pairs;
+    }
+
 }

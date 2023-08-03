@@ -5,11 +5,11 @@ public class Operation extends Entity {
     private User user;
     private Income income;
     private Expenditure expenditure;
-    private double volume;
+    private float volume;
     private Currency currency;
     private String dateOfOperation;
 
-    public Operation(int id, User user, Income income, Expenditure expenditure, double volume, Currency currency, String dateOfOperation) {
+    public Operation(int id, User user, Income income, Expenditure expenditure, float volume, Currency currency, String dateOfOperation) {
         this.id = id;
         this.user = user;
         this.income = income;
@@ -35,7 +35,7 @@ public class Operation extends Entity {
         return expenditure;
     }
 
-    public double getVolume() {
+    public float getVolume() {
         return volume;
     }
 
@@ -63,7 +63,7 @@ public class Operation extends Entity {
         this.expenditure = expenditure;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(float volume) {
         this.volume = volume;
     }
 

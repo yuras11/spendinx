@@ -4,6 +4,7 @@ import by.spendinx.dao.DaoException;
 import by.spendinx.dao.OperationDaoImpl;
 import by.spendinx.dao.UserDaoImpl;
 import by.spendinx.entity.Operation;
+import org.testng.internal.collections.Pair;
 
 import java.sql.Connection;
 import java.util.List;
@@ -27,6 +28,66 @@ public class OperationServiceImpl extends ServiceImpl implements OperationServic
     public List<Operation> findOperationsByUserId(Integer id) throws ServiceException {
         try  {
             return new OperationDaoImpl(connection).findOperationsByUserId(id);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfIncomesInLastMonthByUserId(Integer id) throws ServiceException {
+        try {
+            return new OperationDaoImpl(connection).findSumOfIncomesInLastMonthByUserId(id);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfExpendituresInLastMonthByUserId(Integer id) throws ServiceException {
+        try {
+            return new OperationDaoImpl(connection).findSumOfExpendituresInLastMonthByUserId(id);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfExpendituresByUserId(Integer id) throws ServiceException {
+        try {
+            return new OperationDaoImpl(connection).findSumOfExpendituresByUserId(id);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfIncomesByUserId(Integer id) throws ServiceException {
+        try {
+            return new OperationDaoImpl(connection).findSumOfIncomesByUserId(id);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfExpendituresTodayByUserId(Integer id) throws ServiceException {
+        try {
+            return new OperationDaoImpl(connection).findSumOfExpendituresTodayByUserId(id);
+        }
+        catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Pair<Float, String>> findSumOfIncomesTodayByUserId(Integer id) throws ServiceException {
+        try {
+            return new OperationDaoImpl(connection).findSumOfIncomesTodayByUserId(id);
         }
         catch (DaoException e) {
             throw new ServiceException(e);

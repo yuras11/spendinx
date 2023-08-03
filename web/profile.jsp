@@ -12,48 +12,8 @@
     <link href="profileStyle.css" rel="stylesheet">
     <title>Profile</title>
 </head>
-<style>
-    .delete-btn, .delete-btn:hover{
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 20px;
-        background-color: red;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    .add-operation-btn, .add-operation-btn:hover{
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        margin: 20px;
-        background-color: darkgreen;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
 
-    .operations-table{
-        border-collapse: collapse;
-        border: black;
-        position: absolute;
-    }
-    .operations-table td , th{
-        border: 1px solid black;
-        padding: 10px;
-        text-align: center;
-        cursor: pointer;
-        font-size: 15px;
-        color: black;
-    }
-</style>
+
 <body>
 <header class="masthead mb-auto">
     <a class="delete-btn" href="deleteProfile?UserId=${requestScope.user.id}">Delete profile</a>
@@ -66,11 +26,44 @@
     <li><p><b> Surname: </b> ${requestScope.user.surname} </p></li>
     <li><p><b> Name: </b> ${requestScope.user.name} </p></li>
     <li><p><b> Date of birth: </b> ${requestScope.user.dateOfBirth} </p></li>
+    <li> <hr> </li>
 </ul>
 
-<ul style="list-style: none;">
-    <li><h2> Your operations: </h2><hr></li>
-</ul>
+
+    <ul style="list-style: none;">
+        <li><h2> Stats: </h2><hr></li>
+        <li><p><b> Spent today: </b></p></li>
+        <c:forEach items="${requestScope.expendituresToday}" var = "expendituresToday">
+            <li><p> ${expendituresToday.first()}  ${expendituresToday.second()} </p></li>
+        </c:forEach>
+        <li><p><b> Received today: </b></p></li>
+        <c:forEach items="${requestScope.incomesToday}" var = "incomesToday">
+            <li><p> ${incomesToday.first()}  ${incomesToday.second()} </p></li>
+        </c:forEach>
+        <li><p><b> Spent in last month: </b></p></li>
+        <c:forEach items="${requestScope.expendituresInLastMonth}" var = "expendituresInLastMonth">
+            <li><p> ${expendituresInLastMonth.first()}  ${expendituresInLastMonth.second()} </p></li>
+        </c:forEach>
+        <li><p><b> Received in last month: </b></p></li>
+        <c:forEach items="${requestScope.incomesInLastMonth}" var = "incomesInLastMonth">
+                <li><p> ${incomesInLastMonth.first()}  ${incomesInLastMonth.second()} </p></li>
+        </c:forEach>
+        <li><p><b> Spent in all time: </b></p></li>
+        <c:forEach items="${requestScope.expendituresAllTime}" var = "expendituresAllTime">
+            <li><p> ${expendituresAllTime.first()}  ${expendituresAllTime.second()} </p></li>
+        </c:forEach>
+        <li><p><b> Received in all time: </b></p></li>
+        <c:forEach items="${requestScope.incomesAllTime}" var = "incomesAllTime">
+            <li><p> ${incomesAllTime.first()}  ${incomesAllTime.second()} </p></li>
+        </c:forEach>
+
+        <li> <hr> </li>
+    </ul>
+
+    <ul style="list-style: none;">
+        <li><h3> Your operations: </h3><hr></li>
+    </ul>
+
     <table class = "operations-table">
         <thead>
         <tr>
@@ -88,7 +81,7 @@
             <tr>
                 <td>
                     <c:if test="${income == null}">
-                       Expenditure
+                        Expenditure
                     </c:if>
                     <c:if test="${expenditure == null}">
                         Income
@@ -109,8 +102,6 @@
         </c:forEach>
         </tbody>
     </table>
-
-
 
 </main>
 </body>

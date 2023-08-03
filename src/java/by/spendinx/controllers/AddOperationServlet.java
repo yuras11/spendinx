@@ -6,6 +6,7 @@ import by.spendinx.entity.Income;
 import by.spendinx.entity.Operation;
 import by.spendinx.entity.User;
 import by.spendinx.service.*;
+import org.testng.internal.collections.Pair;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,10 +50,8 @@ public class AddOperationServlet extends HttpServlet {
         try {
 
             Integer id = Integer.parseInt(request.getParameter("UserId"));
-
             String type = request.getParameter("operation");
             String object = request.getParameter("object");
-
             Income income;
             Expenditure expenditure;
             if (Objects.equals(type, "income")) {
@@ -65,7 +64,7 @@ public class AddOperationServlet extends HttpServlet {
                 expenditure = expenditureService.findExpenditureByExpenditureItem(expenditureItemId);
             }
 
-            double volume = Double.parseDouble(request.getParameter("volume"));
+            float volume = Float.parseFloat(request.getParameter("volume"));
             String currency = request.getParameter("currency");
             String dateOfOperation = request.getParameter("Date of operation");
 
@@ -75,8 +74,21 @@ public class AddOperationServlet extends HttpServlet {
             operationService.checkCreate(new Operation(1, user, income, expenditure, volume,
                     currencyService.findCurrencyByName(currency), dateOfOperation));
             List<Operation> operations = operationService.findOperationsByUserId(id);
-            request.setAttribute("operations", operations);
+            List<Pair<Float, String>> expendituresInLastMonth = operationService.findSumOfExpendituresInLastMonthByUserId(user.getId());
+            List<Pair<Float, String>> incomesInLastMonth = operationService.findSumOfIncomesInLastMonthByUserId(user.getId());
+            List<Pair<Float, String>> expendituresAllTime = operationService.findSumOfExpendituresByUserId(user.getId());
+            List<Pair<Float, String>> incomesAllTime = operationService.findSumOfIncomesByUserId(user.getId());
+            List<Pair<Float, String>> expendituresToday = operationService.findSumOfExpendituresTodayByUserId(user.getId());
+            List<Pair<Float, String>> incomesToday = operationService.findSumOfIncomesTodayByUserId(user.getId());
+
             request.setAttribute("user", user);
+            request.setAttribute("operations", operations);
+            request.setAttribute("expendituresInLastMonth", expendituresInLastMonth);
+            request.setAttribute("incomesInLastMonth", incomesInLastMonth);
+            request.setAttribute("expendituresAllTime", expendituresAllTime);
+            request.setAttribute("incomesAllTime", incomesAllTime);
+            request.setAttribute("expendituresToday", expendituresToday);
+            request.setAttribute("incomesToday", incomesToday);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/profile.jsp");
             dispatcher.forward(request, response);
 
